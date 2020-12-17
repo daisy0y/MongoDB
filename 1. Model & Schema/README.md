@@ -8,7 +8,7 @@ MongoDB는 테이블이 없는 nosql입니다.
 사용자가 작성한 Schema를 기준으로 데이터를 DB에 넣기전에 먼저 검사합니다.
 작성한 Schema에 어긋나는 데이터가 있으면 에러를 발생시킵니다.
 
-```
+```js
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
@@ -51,14 +51,14 @@ email은 타입명이 문자열이며 공백(trim)을 제거하고 유일(unique
 이런식으로 기준을 작성하고 Model으로 감싸줍니다. </br>
 ('모델이름',스키마명)으로 작성합니다.</br>
 </br>
-``
+```js
 const User = mongoose.model('User', userSchema)
-``
+```
 </br>
 이런식으로 작성합니다.</br>
 이 스키마를 다른 파일에서도 사용 할 수 있도록 내보내기를 해줍니다.
 </br></br>
-``
+```
 module.exports = { User }
-``
+```
 
