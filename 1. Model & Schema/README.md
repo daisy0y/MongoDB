@@ -45,16 +45,19 @@ const userSchema = mongoose.Schema({
 const User = mongoose.model('User', userSchema)
 module.exports = { User }
 ```
-이것이 바로 Schema라고하는것인데 보통 한 파일에 하나의 스키마를 작성하고 스키마가 커지면 여러 파일로 분산하여 만듭니다.
-name password lastname 등이 속성명으로 필드의 이름이 됩니다.
-email은 타입명이 문자열이며 공백(trim)을 제거하고 유일(unique)해야 한다고 정해주었습니다.
-이런식으로 기준을 작성하고 Model으로 감싸줍니다. 
-('모델이름',스키마명)으로 작성합니다.
+이것이 바로 Schema라고하는것인데 보통 한 파일에 하나의 스키마를 작성하고 스키마가 커지면 여러 파일로 분산하여 만듭니다.</br>
+name password lastname 등이 속성명으로 필드의 이름이 됩니다.</br>
+email은 타입명이 문자열이며 공백(trim)을 제거하고 유일(unique)해야 한다고 정해주었습니다.</br>
+이런식으로 기준을 작성하고 Model으로 감싸줍니다. </br>
+('모델이름',스키마명)으로 작성합니다.</br>
+</br>
 ``
 const User = mongoose.model('User', userSchema)
 ``
-이런식으로 작성합니다.
-이 스키마를 다른 파일에서도 사용 할 수 있게 내보내기를 해줍니다.
+</br>
+이런식으로 작성합니다.</br>
+이 스키마를 다른 파일에서도 사용 할 수 있도록 내보내기를 해줍니다.
+</br></br>
 ``
 module.exports = { User }
 ``
