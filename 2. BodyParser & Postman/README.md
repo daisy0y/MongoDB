@@ -83,8 +83,8 @@ app.post('/register',(req,res)=>{
     
 })
 ```
-status(200)은 성공했다는 http 상태코드이다 아래 링크에서 다른 코드들을 확인 해 볼수 있다.
-https://developer.mozilla.org/ko/docs/Web/HTTP/Status </br>
+status(200)은 성공했다는 http 상태코드이다 [여기](https://developer.mozilla.org/ko/docs/Web/HTTP/Status)에서 다른 코드들을 확인 해 볼수 있다.
+ </br>
 
 Postman에서 post requset로 설정하고 URL은 http://localhost:(설정한포트)/설정한주소
 위의 경우에는 http://localhost:5000/register 이다</br>
