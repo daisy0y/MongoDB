@@ -75,4 +75,83 @@ compare는 3가지를 인자로 받는다.
 
 isMatch가 false이면 json 데이터로 상태와 메세지를 보내준다.
 
-비밀번호가 일치하는 경우에는
+비밀번호가 일치하는 경우에는 토큰을 생성 해야하는데 JSONWEBTOEKN 라이브러를 이용하여 토큰을 생성한다.
+
+`npm install jsonwebtoken --save`
+
+사용방법은 [참조사이트](https://www.npmjs.com/package/jsonwebtoken)를 이용 한다.
+
+예제를 살펴보자.
+
+```js
+    var jwt = require('jsonwebtoken');
+    var token = jwt.sign({ foo: 'bar' }, 'shhhhh');
+```
+
+json webtoken을 import하고 sign이라는 메소드를 이용해 합쳐주면 토큰이 생성이 된다.
+
+> User.js
+
+```js
+    var jwt = require('jsonwebtoken');
+    userSchema.methods.generateToken = function(cb){
+    var user = this;
+    // jsonwebtoken을 이용해 toekn 생성
+    jwt.sign(user._id.toHexString(), 'secretToken')
+
+}
+
+```
+
+generateToken는 임의로 지정할 수 있다.
+
+user id를 넣어줄것인데 es5 문법을 쓰고 있으니 `var user = this;` 를 이용해 지정 해주고 sign의 두번째 인자로는 임의로 지정해 넣으면된다.
+
+user._id + 'secretToken' = token 이며  secretToken를 넣으면 user id가 나오는데 token을 이용해 이 사람이 누구인지를 판별 할 수 있다.
+
+secretToken를 넣었을 때 user.id가 나오기 때문에 secretToken도 기억을 해야한다. 
+
+token이라는 변수로 지정해주었다.
+
+` var token = jwt.sign(user._id, 'secretToken') ` 
+
+User Schema에 token field에 넣어 주고 저장 한다.
+
+
+```js
+    user.token = token
+    user.save(function(err,user){
+        if(err) return cb(err)
+        cb(null,user)
+    })
+```
+
+쿠키 혹은 로컬스토리지에 토큰을 저장해줘야 하는데 여기에선 쿠키를 이용한다.
+
+express에서 제공하는 cookieparser라는 라이브러리가 추가로 필요하다. 
+
+`npm install cookie-parser --save`
+
+>index.js
+
+```js
+  const cookieParser = require('cookie-parser')
+  app.use(cookieParser())
+```
+
+
+```js
+ user.generateToken((err,user)=>{
+          if(err) return res.status(400).send(err);
+
+             // 쿠키, 로컬스토리지 등에 토큰을 저장
+            res.cookie('x_auth',user.token)
+            .status(200)
+            .json({loginSuccess: true, userId: user._id})
+
+
+```
+
+cookie는 두개의 인자를 받는데 첫번째 인자는 쿠키의 네임, 두번째 인자는 벨류값이 된다.
+
+
